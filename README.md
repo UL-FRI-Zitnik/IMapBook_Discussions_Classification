@@ -1,5 +1,9 @@
-# Text Classification on IMapBook discussions
+# Text Classification
 
-### files
+### Data
+
+Discussion from Imapbook ...
+
+### Files
 
 * `data/imapBook/discussion.csv` is csv file containing the data. Values are seperated by tab.
