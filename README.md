@@ -1,2 +1,5 @@
-# NLP_Project_Kojanec_Rus
-Repository for the NLP course's project.
+# Text Classification on IMapBook discussions
+
+### files
+
+* `data/imapBook/discussion.csv` is csv file containing the data. Values are seperated by tab.
