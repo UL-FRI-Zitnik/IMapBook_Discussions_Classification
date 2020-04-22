@@ -36,7 +36,7 @@ The dataset is suitable for both binary and multi-class classification, whether 
 ### Repository Structure
 
 * `data/` contains the dataset and information about it. 
-* `data/imapBook/discussion.csv` is csv file containing the data. Values are seperated by tab.
+* `data/imapBook/discussion.csv` is csv file containing the data. Values are separated by tab.
 * `relevant articles/` contains articles relevant to our work.
 * `src/` contains all source code to replicate our work.
 * `report.pdf` 
