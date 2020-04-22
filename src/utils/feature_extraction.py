@@ -4,7 +4,7 @@ import pandas as pd
 import numpy as np
 
 # loading slovene stopwords:
-SW = pd.read_csv('sloStopWords.txt', sep = '\n').to_numpy()
+SW = pd.read_csv('../../data/sloStopWords.txt', sep ='\n').to_numpy()
 
 # example of what is a book (dataframe with 3 columns: Topic, Message, Book Relevance(label))
 # data = pd.read_excel('../../data/imapBook/AllDiscussionDataCODED_USE_THIS_14Feb2020_MH.xls')
