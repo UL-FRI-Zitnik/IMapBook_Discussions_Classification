@@ -18,7 +18,7 @@ def split_train_test(x, y, split=0.8):
     return xtrain, ytrain, xtest, ytest
 
 
-def select_columns(x=('Message',), y=('Book relevance',)):
+def select_columns(x=('Message', 'Topic'), y=('Book relevance',)):
     data = get_data()
     x = data.loc[:, x]
     y = data.loc[:, y]
