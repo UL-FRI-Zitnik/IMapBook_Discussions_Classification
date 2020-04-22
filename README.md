@@ -33,10 +33,13 @@ or encouraging the discussion (E); _identity_ messages can be answers(A), questi
 The dataset is suitable for both binary and multi-class classification, whether the target variable is the relevance
  or the category of the message respectively.
 
+### Installation
+
+Run `pip3 install -r requirements.txt`.
+
 ### Repository Structure
 
 * `data/` contains the dataset and information about it. 
-* `data/imapBook/discussion.csv` is csv file containing the data. Values are separated by tab.
 * `relevant articles/` contains articles relevant to our work.
 * `src/` contains all source code to replicate our work.
 * `report.pdf` 
