@@ -1,6 +1,8 @@
 pandas
 xlrd
 numpy
-
+scikit-learn
+matplotlib
+nltk
 
 
