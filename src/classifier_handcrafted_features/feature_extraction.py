@@ -1,14 +1,13 @@
 import pickle
 import re
+from os import path
 
-import numpy as np
 import pandas as pd
 from nltk import tokenize
-from nltk.corpus import stopwords
 from nltk.metrics.distance import edit_distance as Lev
 
 
-def levenshtein_dist(sentence1, sentence2, stop_words=None, thr=0.5, substitution_cost=2):
+def levenshtein_dist(message1, message2, stop_words=None, thr=0.5, substitution_cost=2):
     """
     Counts the number of words in the message, whose levenshtein_dist distance from any word in the "question" is smaller than threshold
       - tokens1 and tokens2 are tokenized messages/questions.. order should not matter
@@ -17,8 +16,8 @@ def levenshtein_dist(sentence1, sentence2, stop_words=None, thr=0.5, substitutio
       - sub_cost is the cost for substitution in the calculation of levenshtein distance
     """
 
-    tokens1 = tokenize.casual_tokenize(sentence1)
-    tokens2 = tokenize.casual_tokenize(sentence2)
+    tokens1 = tokenize.casual_tokenize(message1)
+    tokens2 = tokenize.casual_tokenize(message2)
 
     dist = 0
     for t1 in tokens1:
@@ -49,65 +48,92 @@ def prop_name_count(message, names):
     return d
 
 
-def get_features(sentences):
+def get_features(messages):
+    if path.exists('../data/pickled_data/HandcraftedFeatures'):
+        cache = pickle.load(open('../data/pickled_data/HandcraftedFeatures', 'rb'))
+    else:
+        cache = {}
+
     X = []
-    stop = stopwords.words('slovene')
     lexicon = pickle.load(open('../data/lexicon/words_pickled', 'rb'))
     stop_words = pd.read_csv('../data/sloStopWords.txt', sep='\n').to_numpy()
     names = pd.read_csv('../data/Slovenska_Imena.txt', sep=',', header=None).to_numpy()
 
-    for i in range(len(sentences)):
-        message = sentences.loc[i, 'Message']
-        topic = sentences.loc[i, 'Topic'].split('/')[0]
+    for i in range(len(messages)):
+        topic = messages['Topic'].iloc[i].split('/')[0]
+        message = str(messages['Message'].iloc[i])
 
-        message = str(message)  # todo: this is workaround for NA interpreted as missing value
+        key = topic + message
+        if key in cache:
+            X.append(cache[key])
+            continue
 
         x = []
 
-        # no. words
+        # #words
         words = re.findall('\w+', message)
         x.append(len(words))
 
-        # no. mistakes in words
+        # #mistakes in words
         mistakes = 0
         for word in words:
             if word.lower() not in lexicon:
                 mistakes += 1
         x.append(mistakes)
 
-        # max len of word
+        # max len of a word
         x.append(max(map(len, words + [''])))
 
-        # len
+        # #chars
         x.append(len(message))
 
-        # no. ?
+        # #?
         x.append(message.count('?'))
 
-        # no. !
+        # #!
         x.append(message.count('!'))
 
-        # no. ,
+        # #,
         x.append(message.count(','))
 
-        # no. capitals
+        # #caps
         x.append(len(re.findall('[A-Z]', message)))
 
-        # no. capitals that are not at the beginning of a word
+        # #interior caps
         x.append(len(re.findall('\w[A-Z]', message)))
 
-        # no. strange letters
+        # #strange letters
         x.append(len(re.findall('[^\w .,?]', message)))
 
-        # no. numbers after letter
+        # #interior numbers
         x.append(len(re.findall('[a-zA-Z][0-9]', message)))
 
-        # levenshtein distance
+        # lev. distance
         x.append(levenshtein_dist(message, topic, stop_words=stop_words))
 
-        # name count
+        # #names
         x.append(prop_name_count(message, names))
 
+        cache[key] = x
         X.append(x)
 
-    return np.array(X, dtype=float)
+    pickle.dump(cache, open('../data/pickled_data/HandcraftedFeatures', 'wb+'))
+
+    return pd.DataFrame(
+        X,
+        columns=[
+            '#words',
+            '#mistakes in words',
+            'max len of a word',
+            '#chars',
+            '#?',
+            '#!',
+            '#,',
+            '#caps',
+            '#interior caps',
+            '#strange letters',
+            '#interior numbers',
+            'lev. distance',
+            '#names',
+        ]
+    )
