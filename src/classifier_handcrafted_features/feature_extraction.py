@@ -70,19 +70,19 @@ def get_features(messages):
 
         x = []
 
-        # #words
-        words = re.findall('\w+', message)
-        x.append(len(words))
+        # #tokens
+        tokens = tokenize.casual_tokenize(message)
+        x.append(len(tokens))
 
         # #mistakes in words
         mistakes = 0
-        for word in words:
+        for word in tokens:
             if word.lower() not in lexicon:
                 mistakes += 1
         x.append(mistakes)
 
         # max len of a word
-        x.append(max(map(len, words + [''])))
+        x.append(max(map(len, tokens + [''])))
 
         # #chars
         x.append(len(message))
@@ -95,6 +95,9 @@ def get_features(messages):
 
         # #,
         x.append(message.count(','))
+
+        # #.
+        x.append(message.count('.'))
 
         # #caps
         x.append(len(re.findall('[A-Z]', message)))
@@ -114,6 +117,21 @@ def get_features(messages):
         # #names
         x.append(prop_name_count(message, names))
 
+        # #question words (without 'kdo')
+        n = 0
+        for w in tokens:
+            if w in {'kaj', 'koga', 'česa', 'komu', 'čemu', 'kom', 'čim',
+                     'zakaj', 'kam', 'kje', 'kod', 'kako', 'kdaj'}:
+                n += 1
+        x.append(n)
+
+        # #'kdo'
+        n = 0
+        for w in tokens:
+            if w == 'kdo':
+                n += 1
+        x.append(n)
+
         cache[key] = x
         X.append(x)
 
@@ -121,19 +139,19 @@ def get_features(messages):
 
     return pd.DataFrame(
         X,
-        columns=[
-            '#words',
-            '#mistakes in words',
-            'max len of a word',
-            '#chars',
-            '#?',
-            '#!',
-            '#,',
-            '#caps',
-            '#interior caps',
-            '#strange letters',
-            '#interior numbers',
-            'lev. distance',
-            '#names',
-        ]
+        # columns=[
+        # '#words',
+        # '#mistakes in words',
+        # 'max len of a word',
+        # '#chars',
+        # '#?',
+        # '#!',
+        # '#,',
+        # '#caps',
+        # '#interior caps',
+        # '#strange letters',
+        # '#interior numbers',
+        # 'lev. distance',
+        # '#names',
+        # ]
     )

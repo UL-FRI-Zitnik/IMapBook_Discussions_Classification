@@ -19,11 +19,22 @@ class Model:
         })) == 0
         self.imap_columns = imap_columns
 
+        self.mean = self.std = None
+
     def fit(self, messages, y):
         raise
 
     def predict(self, messages):
         raise
+
+    def normalize(self, X, *, init=False):
+        if init:
+            self.mean = np.mean(X, axis=0)
+        X -= self.mean
+
+        if init:
+            self.std = np.std(X, axis=0)
+        X /= self.std
 
     def params_str(self):
         return 'target={}'.format(self.target)
@@ -42,8 +53,6 @@ class Model:
             acc.append(metrics.accuracy_score(ytest, y_predicted))
             f1.append(metrics.f1_score(ytest, y_predicted, average = 'weighted'))
         print(self)
-        print(
-            'Accuracy (+- SE): {:.2f} +- {:.3f}'.format(np.mean(acc), np.std(acc)/np.sqrt(len(acc))))
-        print(
-            'F1 score (+- SE): {:.2f} +- {:.3f}'.format(np.mean(f1), np.std(f1)/np.sqrt(len(f1))))
+        print('Accuracy (+- STD): {:.2f} +- {:.3f}'.format(np.mean(acc), np.std(acc)))
+        print('F1 score (+- STD): {:.2f} +- {:.3f}'.format(np.mean(f1), np.std(f1)))
         print()
