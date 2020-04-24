@@ -21,6 +21,7 @@ def split_train_test(x, y, split=0.8):
 
 def select_columns(x=('Message', 'Topic'), y='Book relevance', shuffle=True):
     data = get_data()
+    data[y] = data[y].astype('category')
     data = data.dropna(subset=list(x) + [y])
     if shuffle:
         data = data.sample(frac=1, random_state=0)
@@ -42,7 +43,7 @@ def kfolds(x=('Message', 'Topic'), y='Book relevance', k=5, shuffle=True):
         data = data.sample(frac=1, random_state=0)
     data = data.reset_index(drop=True)
     x = data.loc[:, x]
-    y = data.loc[:, y]
+    y = data.loc[:, y].astype('category')
 
     kf = KFold(n_splits=k, shuffle=shuffle, random_state=0)
     for train_index, test_index in kf.split(x):

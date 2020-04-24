@@ -33,14 +33,17 @@ class Model:
 
     def cross_validate(self):
         acc = []
+        f1 =[]
 
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
             self.fit(xtrain, ytrain)
             y_predicted = self.predict(xtest)
 
             acc.append(metrics.accuracy_score(ytest, y_predicted))
-
+            f1.append(metrics.f1_score(ytest, y_predicted, average = 'weighted'))
         print(self)
         print(
-            'Accuracy: {:.2f} +- {:.3f}'.format(np.mean(acc), np.std(acc)))  # todo: correct way to measure uncertainty?
+            'Accuracy (+- SE): {:.2f} +- {:.3f}'.format(np.mean(acc), np.std(acc)/np.sqrt(len(acc))))
+        print(
+            'F1 score (+- SE): {:.2f} +- {:.3f}'.format(np.mean(f1), np.std(f1)/np.sqrt(len(f1))))
         print()
