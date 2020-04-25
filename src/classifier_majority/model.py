@@ -32,4 +32,3 @@ class Majority(Model):
 
     def predict_probabilities(self, messages):
         return np.array([self.probabilities] * len(messages)), self.classes
-

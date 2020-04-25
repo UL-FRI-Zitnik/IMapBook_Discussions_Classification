@@ -3,10 +3,10 @@ Base class for the models.
 """
 
 import numpy as np
-from sklearn import metrics
 
 from utils.data import kfolds
-from utils.metrics import log_loss, get_mean_se
+from utils.metrics import get_mean_se
+
 
 class Model:
     def __init__(self, imap_columns, target):
@@ -46,29 +46,22 @@ class Model:
         return '{}, {}'.format(type(self).__name__, self.params_str())
 
     def cross_validate(self):
-        accuracy = []
-        log_losses = []
+        acc = []
 
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
             self.fit(xtrain, ytrain)
-            y_predicted_probabilities, classes = self.predict_probabilities(xtest)
-            y_predicted = classes[np.argmax(y_predicted_probabilities, axis=1)]
+            y_predicted = self.predict(xtest)
 
             no_same = np.sum(ytest == y_predicted)
-            accuracy += [1] * no_same + [0] * (len(ytest) - no_same)
-            log_losses += log_loss(y_predicted_probabilities, ytest, classes)
+            acc += [1] * no_same + [0] * (len(ytest) - no_same)
 
-        acc_mean, acc_se = get_mean_se(accuracy)
-        ll_mean, ll_se = get_mean_se(log_losses)
+        acc_mean, acc_se = get_mean_se(acc)
 
         print(self)
         print('accuracy (+- SE): {:.2f} +- {:.3f}'.format(acc_mean, acc_se))
-        print('log loss (+- SE): {:.2f} +- {:.3f}'.format(ll_mean, ll_se))
         print()
 
         return {
             'acc': float(acc_mean),
             'acc_se': float(acc_se),
-            'll': float(ll_mean),
-            'll_se': float(ll_se),
         }

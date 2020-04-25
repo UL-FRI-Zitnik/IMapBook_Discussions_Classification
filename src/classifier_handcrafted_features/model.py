@@ -25,7 +25,7 @@ class HandcraftedFeatures(Model):
                                                 random_state=0,
                                                 n_jobs=-1)
         elif model == 'SVM':
-            self.model = svm.SVC(C=5, gamma='auto', probability=True)
+            self.model = svm.SVC(C=5, gamma='auto')
         elif model == 'LR':
             self.model = LogisticRegression(max_iter=1000, n_jobs=-1)
         else:
@@ -39,6 +39,14 @@ class HandcraftedFeatures(Model):
 
         self.model.fit(X, y)
         # print(self.model.score(X, y))
+
+    def predict(self, messages):
+        X = get_features(messages)
+
+        if self.standardize:
+            self.normalize(X)
+
+        return self.model.predict(X)
 
     def predict_probabilities(self, messages):
         X = get_features(messages)

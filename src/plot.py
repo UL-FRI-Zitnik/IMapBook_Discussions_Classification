@@ -12,21 +12,20 @@ targets = list(results.keys())
 
 plt.style.use('ggplot')
 
-for score in ['acc', 'f1']:
+for score in ['acc']:
     score_nice = {
         'acc': 'Accuracy',
-        'f1': 'F1',
     }[score]
 
     scores = pd.DataFrame([
         [results[target][model][score] for target in targets]
         for model in models
     ], columns=targets, index=models)
-    scores = scores.sort_values('Book relevance')
+    scores = scores.sort_values('Book relevance', ascending=False)
     scores = scores.sort_values('Majority', axis='columns')
 
     errors = np.array([
-        [results[target][model][score + '_std'] for target in targets]
+        [results[target][model][score + '_se'] for target in targets]
         for model in models
     ]).T
 
