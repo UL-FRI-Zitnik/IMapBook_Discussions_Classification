@@ -1,6 +1,6 @@
 """
 Script takes lexicon from https://www.clarin.si/repository/xmlui/handle/11356/1230
-and extracts wrods from it and saves them to ./data/lexicon/words
+and extracts words from it and saves them to ./data/lexicon/words
 and ./data/lexicon/words_pickled.
 """
 import pickle
