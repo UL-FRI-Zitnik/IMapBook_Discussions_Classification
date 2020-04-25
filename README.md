@@ -37,6 +37,15 @@ The dataset is suitable for both binary and multi-class classification, whether 
 
 Run `pip3 install -r requirements.txt`.
 
+### Running
+
+Run by
+
+```
+cd src
+python3 main.py
+``` 
+
 ### Repository Structure
 
 * `data/` contains the dataset and information about it. 
