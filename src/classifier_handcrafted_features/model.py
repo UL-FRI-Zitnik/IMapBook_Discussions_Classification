@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.naive_bayes import MultinomialNB
 
 from classifier_handcrafted_features.feature_extraction import get_features
-from model_base import Model
+from utils.model_base import Model
 
 
 class HandcraftedFeatures(Model):
@@ -16,7 +16,7 @@ class HandcraftedFeatures(Model):
 
         self.standardize = standardize
 
-        if model == 'Bayes':
+        if model == 'NB':
             self.model = MultinomialNB()
         elif model == 'RF':
             self.model = RandomForestClassifier(n_estimators=150,
