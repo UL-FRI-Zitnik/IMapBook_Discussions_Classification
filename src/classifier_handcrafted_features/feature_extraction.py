@@ -153,5 +153,7 @@ def get_features(messages):
         # '#interior numbers',
         # 'lev. distance',
         # '#names',
+        # '#quest_w'
+        # '#who'
         # ]
     )
