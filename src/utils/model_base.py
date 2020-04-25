@@ -6,7 +6,7 @@ import numpy as np
 from sklearn import metrics
 
 from utils.data import kfolds
-
+from utils.metrics import log_loss, get_mean_se
 
 class Model:
     def __init__(self, imap_columns, target):
@@ -27,6 +27,9 @@ class Model:
     def predict(self, messages):
         raise
 
+    def predict_probabilities(self, messages):
+        raise
+
     def normalize(self, X, *, init=False):
         if init:
             self.mean = np.mean(X, axis=0)
@@ -43,24 +46,29 @@ class Model:
         return '{}, {}'.format(type(self).__name__, self.params_str())
 
     def cross_validate(self):
-        acc = []
-        f1 = []
+        accuracy = []
+        log_losses = []
 
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
             self.fit(xtrain, ytrain)
-            y_predicted = self.predict(xtest)
+            y_predicted_probabilities, classes = self.predict_probabilities(xtest)
+            y_predicted = classes[np.argmax(y_predicted_probabilities, axis=1)]
 
-            acc.append(metrics.accuracy_score(ytest, y_predicted))
-            f1.append(metrics.f1_score(ytest, y_predicted, average='weighted'))
+            no_same = np.sum(ytest == y_predicted)
+            accuracy += [1] * no_same + [0] * (len(ytest) - no_same)
+            log_losses += log_loss(y_predicted_probabilities, ytest, classes)
+
+        acc_mean, acc_se = get_mean_se(accuracy)
+        ll_mean, ll_se = get_mean_se(log_losses)
 
         print(self)
-        print('Accuracy (+- STD): {:.2f} +- {:.3f}'.format(np.mean(acc), np.std(acc)))
-        print('F1 score (+- STD): {:.2f} +- {:.3f}'.format(np.mean(f1), np.std(f1)))
+        print('accuracy (+- SE): {:.2f} +- {:.3f}'.format(acc_mean, acc_se))
+        print('log loss (+- SE): {:.2f} +- {:.3f}'.format(ll_mean, ll_se))
         print()
 
         return {
-            'acc': float(np.mean(acc)),
-            'acc_std': float(np.std(acc)),
-            'f1': float(np.mean(f1)),
-            'f1_std': float(np.std(f1)),
+            'acc': float(acc_mean),
+            'acc_se': float(acc_se),
+            'll': float(ll_mean),
+            'll_se': float(ll_se),
         }
