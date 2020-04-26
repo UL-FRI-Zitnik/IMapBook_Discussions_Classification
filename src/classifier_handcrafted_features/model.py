@@ -47,7 +47,10 @@ class HandcraftedFeatures(Model):
             self.normalize(X)
 
         return self.model.predict(X)
-
+    
+    def feature_importance(self):
+      return self.feature_importances_
+    
     def predict_probabilities(self, messages):
         X = get_features(messages)
 
