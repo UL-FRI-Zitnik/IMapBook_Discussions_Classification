@@ -19,6 +19,7 @@ class Model:
         })) == 0
         self.imap_columns = imap_columns
 
+        self.model = None
         self.mean = self.std = None
 
     def fit(self, messages, y):
@@ -45,27 +46,32 @@ class Model:
     def __str__(self):
         return '{}, {}'.format(type(self).__name__, self.params_str())
 
-    def cross_validate(self, importance = False):
+    def cross_validate(self):
         acc = []
-        imp = []
+
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
             self.fit(xtrain, ytrain)
             y_predicted = self.predict(xtest)
 
             no_same = np.sum(ytest == y_predicted)
             acc += [1] * no_same + [0] * (len(ytest) - no_same)
-            imp.append(self.model.feature_importances_)
-            
+
         acc_mean, acc_se = get_mean_se(acc)
 
         print(self)
         print('accuracy (+- SE): {:.2f} +- {:.3f}'.format(acc_mean, acc_se))
         print()
-        
-        if importance:
-          return np.mean(imp,0)
-        else:
-          return {
-              'acc': float(acc_mean),
-              'acc_se': float(acc_se),
-          }
+
+        return {
+            'acc': float(acc_mean),
+            'acc_se': float(acc_se),
+        }
+
+    def feature_importances(self):
+        importances = []
+
+        for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
+            self.fit(xtrain, ytrain)
+            importances.append(self.model.feature_importances_)
+
+        return np.mean(importances, 0)

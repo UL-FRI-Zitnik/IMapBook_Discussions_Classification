@@ -1,0 +1,24 @@
+import os
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
+from classifier_handcrafted_features.model import HandcraftedFeatures
+
+assert os.getcwd().split('/')[-1] == 'src', "Run from 'src' folder."
+
+plt.style.use('ggplot')
+
+inds = ['Book relevance', 'Type', 'CategoryBroad']
+cols = ['#tokens', '#mistakes in words', 'max len of a word', '#chars', '#?', '#!', '#,', '#.', '#caps',
+        '#interior caps', '#strange letters', '#interior numbers', 'lev. distance', '#names', '#quest_w', '#who']
+
+imp = []
+for i, target in enumerate(inds):
+    imp.append(HandcraftedFeatures('RF', target=target).feature_importances())
+
+importance = pd.DataFrame(imp, columns=cols, index=inds).T
+importance = importance.sort_values('Book relevance', ascending=False)
+importance.plot.barh(title='Features Importances for RF Model', fontsize=14)
+plt.tight_layout()
+plt.savefig(os.path.join('../results', 'feature_imp_RF_plot.pdf'), format='pdf')

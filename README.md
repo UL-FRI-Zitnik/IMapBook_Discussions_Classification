@@ -39,19 +39,13 @@ Run `pip3 install -r requirements.txt`.
 
 ### Running
 
-Run from `src` folder.
-
-To evaluate the models run
+To evaluate the models go to `src` folder and run
 
 ```
 python3 main.py
 ``` 
 
-after that to plot the results run
-
-```
-python3 plot.py
-```
+after that to plot the results run scripts in `/src/plots`.
 
 ### Repository Structure
 

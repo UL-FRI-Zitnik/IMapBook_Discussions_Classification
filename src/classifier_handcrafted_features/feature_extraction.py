@@ -137,23 +137,4 @@ def get_features(messages):
 
     pickle.dump(cache, open('../data/pickled_data/HandcraftedFeatures', 'wb+'))
 
-    return pd.DataFrame(
-        X,
-        # columns=[
-        # '#words',
-        # '#mistakes in words',
-        # 'max len of a word',
-        # '#chars',
-        # '#?',
-        # '#!',
-        # '#,',
-        # '#caps',
-        # '#interior caps',
-        # '#strange letters',
-        # '#interior numbers',
-        # 'lev. distance',
-        # '#names',
-        # '#quest_w'
-        # '#who'
-        # ]
-    )
+    return pd.DataFrame(X)
