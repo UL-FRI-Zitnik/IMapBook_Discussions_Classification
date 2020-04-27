@@ -7,7 +7,7 @@ from classifier_handcrafted_features.model import HandcraftedFeatures
 
 assert os.getcwd().split('/')[-1] == 'src', "Run from 'src' folder."
 
-plt.style.use('ggplot')
+
 
 inds = ['Book relevance', 'Type', 'CategoryBroad']
 cols = ['#tokens', '#mistakes in words', 'max len of a word', '#chars', '#?', '#!', '#,', '#.', '#caps',
@@ -19,6 +19,8 @@ for i, target in enumerate(inds):
 
 importance = pd.DataFrame(imp, columns=cols, index=inds).T
 importance = importance.sort_values('Book relevance', ascending=False)
-importance.plot.barh(title='Features Importances for RF Model', fontsize=14)
+importance.plot.barh(title='Features Importance for RF Model', fontsize=14)
+
+plt.style.use('ggplot')
 plt.tight_layout()
-plt.savefig(os.path.join('../results', 'feature_imp_RF_plot.pdf'), format='pdf')
+plt.savefig(os.path.join('../results', 'features_imp_RF_plot.pdf'), format='pdf')

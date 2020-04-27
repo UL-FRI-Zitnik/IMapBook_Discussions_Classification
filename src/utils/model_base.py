@@ -54,7 +54,7 @@ class Model:
             y_predicted = self.predict(xtest)
 
             no_same = np.sum(ytest == y_predicted)
-            acc += [1] * no_same + [0] * (len(ytest) - no_same)
+            acc += [1] * no_same + [0] * (len(ytest) - no_same)  # todo: ...
 
         acc_mean, acc_se = get_mean_se(acc)
 
