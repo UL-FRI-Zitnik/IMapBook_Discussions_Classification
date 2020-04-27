@@ -58,4 +58,4 @@ python3 plot.py
 * `data/` contains the dataset and information about it. 
 * `relevant articles/` contains articles relevant to our work.
 * `src/` contains all source code to replicate our work.
-* `report.pdf` 
+* `report/report.pdf` Report. 
