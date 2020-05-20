@@ -4,6 +4,8 @@ import yaml
 
 from classifier_handcrafted_features.model import HandcraftedFeatures
 from classifier_majority.model import Majority
+from classifier_elmo.model import ElmoClassifier
+
 
 if os.path.exists('../results/results.yaml'):
     results = yaml.load(open('../results/results.yaml'), yaml.Loader)
@@ -17,11 +19,12 @@ for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
         results[target] = {}
 
     models = [
-        Majority(target=target),
-        HandcraftedFeatures('NB', target=target),
-        HandcraftedFeatures('RF', target=target),
-        HandcraftedFeatures('SVM', target=target),
-        HandcraftedFeatures('LR', target=target, standardize=True),
+        # Majority(target=target),
+        # HandcraftedFeatures('NB', target=target),
+        # HandcraftedFeatures('RF', target=target),
+        # HandcraftedFeatures('SVM', target=target),
+        # HandcraftedFeatures('LR', target=target, standardize=True),
+        ElmoClassifier('RF', target=target),
     ]
 
     for model in models:
