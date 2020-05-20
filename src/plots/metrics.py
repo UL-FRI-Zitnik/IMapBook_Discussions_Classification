@@ -32,4 +32,4 @@ for score in ['acc']:
     ]).T
 
     scores.plot.barh(title=score_nice, xerr=errors, capsize=3)
-    plt.savefig(os.path.join('../results', score_nice + '_plot.pdf'), format='pdf')
+    plt.savefig(os.path.join('../results', score_nice + '_plot.pdf'), format='pdf', bbox_inches='tight')

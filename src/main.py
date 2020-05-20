@@ -11,13 +11,20 @@ else:
     results = {}
 
 for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
+    print('TARGET:', target, '\n')
+
     if target not in results:
         results[target] = {}
 
-    results[target]['Majority'] = Majority(target=target).cross_validate()
-    results[target]['NB'] = HandcraftedFeatures('NB', target=target).cross_validate()
-    results[target]['RF'] = HandcraftedFeatures('RF', target=target).cross_validate()
-    results[target]['SVM'] = HandcraftedFeatures('SVM', target=target).cross_validate()
-    results[target]['LR'] = HandcraftedFeatures('LR', target=target, standardize=True).cross_validate()
+    models = [
+        Majority(target=target),
+        HandcraftedFeatures('NB', target=target),
+        HandcraftedFeatures('RF', target=target),
+        HandcraftedFeatures('SVM', target=target),
+        HandcraftedFeatures('LR', target=target, standardize=True),
+    ]
+
+    for model in models:
+        results[target][str(model)] = model.cross_validate()
 
 yaml.dump(results, open('../results/results.yaml', 'w+'), default_flow_style=False)

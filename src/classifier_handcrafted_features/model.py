@@ -15,6 +15,7 @@ class HandcraftedFeatures(Model):
         )
 
         self.standardize = standardize
+        self.model_name = model
 
         if model == 'NB':
             self.model = MultinomialNB()
@@ -56,5 +57,5 @@ class HandcraftedFeatures(Model):
 
         return self.model.predict_proba(X), self.model.classes_
 
-    def params_str(self):
-        return 'target={}, model={}'.format(self.target, type(self.model).__name__)
+    def __str__(self):
+        return 'Handcrafted, {}'.format(self.model_name)
