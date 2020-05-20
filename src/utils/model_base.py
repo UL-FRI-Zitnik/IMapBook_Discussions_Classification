@@ -47,6 +47,7 @@ class Model:
         return '{}{}'.format(type(self).__name__, self.params_str())
 
     def cross_validate(self):
+        print(self)
         acc = []
 
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
@@ -58,7 +59,6 @@ class Model:
 
         acc_mean, acc_se = get_mean_se(acc)
 
-        print(self)
         print('accuracy (+- SE): {:.2f} +- {:.3f}'.format(acc_mean, acc_se))
         print()
 
