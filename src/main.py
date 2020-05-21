@@ -19,11 +19,11 @@ for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
         results[target] = {}
 
     models = [
-        Majority(target=target),
-        HandcraftedFeatures('NB', target=target),
-        HandcraftedFeatures('RF', target=target),
-        HandcraftedFeatures('SVM', target=target),
-        HandcraftedFeatures('LR', target=target, standardize=True),
+        # Majority(target=target),
+        # HandcraftedFeatures('NB', target=target),
+        # HandcraftedFeatures('RF', target=target),
+        # HandcraftedFeatures('SVM', target=target),
+        # HandcraftedFeatures('LR', target=target, standardize=True),
         ElmoClassifier('KNN', target=target),
     ]
 

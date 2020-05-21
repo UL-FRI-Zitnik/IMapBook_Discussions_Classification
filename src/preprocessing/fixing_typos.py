@@ -113,7 +113,7 @@ for i in tqdm(range(len(data))):
                     removed.append(token)
             else:
                 c, no_mistakes = correction(token)
-                if c is not None:
+                if c is not None and lexicon[c.lower()] > 1e-7:
                     correct.append(c)
                     no_typos += no_mistakes
                 else:
