@@ -3,15 +3,17 @@ Base class for the models.
 """
 
 import numpy as np
+from tqdm import tqdm
 
 from utils.data import kfolds
 from utils.metrics import get_mean_se
 
 
 class Model:
-    def __init__(self, imap_columns, target):
+    def __init__(self, imap_columns, target, *, correct_typos=False):
         assert target in ('Book relevance', 'Type', 'Category', 'CategoryBroad')
         self.target = target
+        self.correct_typos = correct_typos
 
         assert len(set(imap_columns).difference({
             'School', 'Cohort', 'Book ID', 'Topic', 'Bookclub', 'User ID', 'Name', 'Message', 'Translation',
@@ -50,7 +52,7 @@ class Model:
         print(self)
         acc = []
 
-        for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target):
+        for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target, correct_typos=self.correct_typos):
             self.fit(xtrain, ytrain)
             y_predicted = self.predict(xtest)
 
