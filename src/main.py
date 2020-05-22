@@ -24,7 +24,7 @@ for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
         HandcraftedFeatures('RF', target=target),
         HandcraftedFeatures('SVM', target=target),
         HandcraftedFeatures('LR', target=target, standardize=True),
-        ElmoClassifier('KNN', target=target),
+        ElmoClassifier('RF', target=target),
     ]
 
     for model in models:
