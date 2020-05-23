@@ -9,7 +9,7 @@ import yaml
 def plot():
     assert os.getcwd().split('/')[-1] == 'src', "Run from 'src' folder."
 
-    results = yaml.load(open('../results/baselines.yaml'), yaml.Loader)
+    results = yaml.load(open('../results/results_baselines.yaml'), yaml.Loader)
 
     models = list(results[list(results.keys())[0]].keys())
     targets = list(results.keys())
@@ -34,7 +34,7 @@ def plot():
         ]).T
 
         scores.plot.barh(title=score_nice, xerr=errors, capsize=3)
-        plt.savefig(os.path.join('../results', score_nice + '_plot.pdf'), format='pdf', bbox_inches='tight')
+        plt.savefig('../results/plot_baselines.pdf', format='pdf', bbox_inches='tight')
 
 
 if __name__ == '__main__':

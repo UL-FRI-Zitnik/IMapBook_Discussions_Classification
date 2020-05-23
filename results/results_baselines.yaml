@@ -1,7 +1,4 @@
 Book relevance:
-  ELMo, RF:
-    acc: 0.7866026003391747
-    acc_se: 0.006888003135174266
   Handcrafted, LR:
     acc: 0.785472018089316
     acc_se: 0.006901260461305634
@@ -18,9 +15,6 @@ Book relevance:
     acc: 0.6088185415488977
     acc_se: 0.008204538394002979
 CategoryBroad:
-  ELMo, RF:
-    acc: 0.6254237288135593
-    acc_se: 0.008134964784691119
   Handcrafted, LR:
     acc: 0.5949152542372881
     acc_se: 0.008250853311683829
@@ -37,9 +31,6 @@ CategoryBroad:
     acc: 0.4036723163841808
     acc_se: 0.008246227991815248
 Type:
-  ELMo, RF:
-    acc: 0.6717514124293785
-    acc_se: 0.007892309285343062
   Handcrafted, LR:
     acc: 0.6768361581920904
     acc_se: 0.007860524506943209

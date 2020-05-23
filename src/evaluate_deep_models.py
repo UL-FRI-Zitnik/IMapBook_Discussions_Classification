@@ -19,23 +19,29 @@ targets = ['Book relevance', 'Type', 'CategoryBroad']
 
 results = []
 for t in targets:
+    print('Evaluating on target:', t)
+
     train_X, train_y, test_X, test_y = select_columns(x=['Message', 'Translation', 'Topic'], y=t)
     enc = LabelEncoder()
     enc.fit(train_y.values)
     test_y = enc.transform(test_y.values)
 
+    print('Baseline')
     rf = HandcraftedFeatures('RF', target=t)
     rf.fit(train_X[['Message', 'Topic']], train_y)
     pred_rf = enc.transform(rf.predict(test_X[['Message', 'Topic']]))
 
+    print('ELMo')
     elmo = ElmoClassifier('RF', target=t)
     elmo.fit(train_X[['Message', 'Topic']], train_y)
-    pred_elmo = elmo.predict(test_X[['Message', 'Topic']])
+    pred_elmo = enc.transform(elmo.predict(test_X[['Message', 'Topic']]))
 
+    print('BERT on Slovene messages')
     bert_slo = Bert_Model(t)
     bert_slo.fit(train_X, train_y)
     pred_bert_slo = bert_slo.predict(test_X)
 
+    print('BERT on English messages')
     bert_eng = Bert_Model(t, True)
     bert_eng.fit(train_X, train_y)
     pred_bert_eng = bert_eng.predict(test_X)
@@ -45,9 +51,9 @@ for t in targets:
                     accuracy(test_y, pred_bert_slo),
                     accuracy(test_y, pred_bert_eng)])
 
-results = pd.DataFrame(results, columns=['RF', 'ELMo', 'BERT_slo', 'BERT_eng'])
+results = pd.DataFrame(results, columns=['RF', 'ELMo'])
 results.index = targets
 
-pickle.dump(results, open('../results/deep_models.yaml', 'wb+'))
+pickle.dump(results, open('../results/results_deep_models', 'wb+'))
 
 plot()
