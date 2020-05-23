@@ -35,7 +35,7 @@ pip3 install virtualenv
 To create and activate virtual environment, run
 
 ```
-python3 -m venv venv
+virtualenv venv
 source venv/bin/activate
 ```
 
