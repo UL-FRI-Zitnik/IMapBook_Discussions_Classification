@@ -3,9 +3,10 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from classifier_handcrafted_features.model import HandcraftedFeatures
+if os.getcwd().split('/')[-1] == 'plots':
+    os.chdir('..')
 
-assert os.getcwd().split('/')[-1] == 'src', "Run from 'src' folder."
+from classifier_handcrafted_features.model import HandcraftedFeatures
 
 inds = ['Book relevance', 'Type', 'CategoryBroad']
 cols = ['#tokens', '#mistakes in words', 'max len of a word', '#chars', '#?', '#!', '#,', '#.', '#caps',
@@ -21,4 +22,4 @@ importance.plot.barh(title='Features Importance for RF Model', fontsize=14)
 
 plt.style.use('ggplot')
 plt.tight_layout()
-plt.savefig(os.path.join('../results', 'features_imp_RF_plot.pdf'), format='pdf')
+plt.savefig(os.path.join('../../results', 'features_imp_RF_plot.pdf'), format='pdf')
