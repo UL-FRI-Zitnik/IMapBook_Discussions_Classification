@@ -71,31 +71,27 @@ Go to src folder.
 cd src
 ```
 
-There are two groups of models, baseline models and deep neural models. To run baseline models, run
+There are two groups of models, baseline models and deep neural models. To evaluate baseline models, run the following
+command. Script stores numerical results to `./results/results_baselines.yaml` and plot to `./results/plot_baselines.pdf`. 
 
 ```
 python3 evaluate_baselines.py
 ``` 
 
-Script stores numerical results to `./results/results_baselines.yaml` and plot to `./results/plot_baselines.pdf`.
-
-By
+To evaluate ELMo and BERT models, run the following command. Results are stored in 
+file `./results/results_deep_models` and plotted
+in `./results/plot_deep_models.pdf`.
+ 
 
 ```
 python3 evaluate_deep_models.py
 ```
 
-ELMo and BERT models are evaluated. Results are stored in file `./results/results_deep_models` and plotted
-in `./results/plot_deep_models.pdf`.
-
-
-To plot features importance, run 
+To plot features importance, run next command. Figure is saved to `./results/plot_imp_RF_plot.pdf`. 
 
 ```
 python3 plots/feature_importances.py
 ```
-
-Figure is saved to `./results/plot_imp_RF_plot.pdf`.
 
 To train BERT model, run 
 
