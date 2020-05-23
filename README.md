@@ -1,16 +1,12 @@
 # IMapbook: Automating Analysis of Group Discussions
 
-Nature Language Processing has seen a huge rise in popularity in 
-recent years. It is now broadly studied topic with many successful 
-applications. In this project we touch subfield Text Classification 
-and apply its methods to the data from IMapbook, a web-based
-technology that allows reading material to be intermingled with interactive 
-games and discussions. Some portion of discussions from this platform were manually 
-annotated, each reply was given more categories based on the information in the 
-reply. Our goal is to  take this data and try to build a classifier which would 
-predict these categories. Such classifier could then be used to automate analysis 
-of discussions at this platform, recommend the time for the teacher’s intervention
-and more.
+The constant advancements in technology introduce new approaches and tools for students' education.
+ Such tool is the ImapBook, an interactive platform that allows students to communicate and discuss about 
+ the book they are reading. To give the best support, such applications need natural language processing 
+ features, that understand the content of communications and automatically intervene when the focus on the 
+ topic is lost. Thus, we present different text classification models that classify such texts from students' 
+ communications into useful categories. The best performing method is fine-tuned BERT, which outperforms simpler 
+ classification methods based on handcrafted features.
 
 ### Data
 
