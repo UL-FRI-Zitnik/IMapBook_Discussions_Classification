@@ -56,7 +56,7 @@ pip3 install cudatoolkit~=10.1
 
 ##### Downloading ELMo and BERT pre-trained Models
 
-To download ELMo model trained on Slovene corpora, visit [clarin.si](http://hdl.handle.net/11356/1277)
+To download ELMo model trained on Slovene corpus, visit [clarin.si](http://hdl.handle.net/11356/1277)
 website and download *Slovenian ELMo model* (file `slovenian-elmo.tar.gz`). Extract its contents and place 
 files `options.json` and `slovenian-elmo-weights.hdf5` into `data/elmo/` folder.
 
