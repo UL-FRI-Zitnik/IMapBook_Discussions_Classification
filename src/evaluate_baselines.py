@@ -2,13 +2,13 @@ import os
 
 import yaml
 
+from classifier_elmo.model import ElmoClassifier
 from classifier_handcrafted_features.model import HandcraftedFeatures
 from classifier_majority.model import Majority
-from classifier_elmo.model import ElmoClassifier
+from plots.plot_baselines import plot
 
-
-if os.path.exists('../results/results.yaml'):
-    results = yaml.load(open('../results/results.yaml'), yaml.Loader)
+if os.path.exists('../results/baselines.yaml'):
+    results = yaml.load(open('../results/baselines.yaml'), yaml.Loader)
 else:
     results = {}
 
@@ -30,4 +30,6 @@ for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
     for model in models:
         results[target][str(model)] = model.cross_validate()
 
-yaml.dump(results, open('../results/results.yaml', 'w+'), default_flow_style=False)
+yaml.dump(results, open('../results/baselines.yaml', 'w+'), default_flow_style=False)
+
+plot()

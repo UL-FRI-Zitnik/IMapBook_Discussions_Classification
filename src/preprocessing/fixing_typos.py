@@ -8,7 +8,7 @@ from tqdm import tqdm
 from utils.data import get_data
 
 
-def correction(word : str):
+def correction(word: str):
     if len(word) == 0:
         return None, 0
     uppercase_first = word[0].isupper()
@@ -23,7 +23,7 @@ def correction(word : str):
     return w, n
 
 
-def candidates(word : str):
+def candidates(word: str):
     words = []
 
     # expanding

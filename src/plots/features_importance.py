@@ -7,8 +7,6 @@ from classifier_handcrafted_features.model import HandcraftedFeatures
 
 assert os.getcwd().split('/')[-1] == 'src', "Run from 'src' folder."
 
-
-
 inds = ['Book relevance', 'Type', 'CategoryBroad']
 cols = ['#tokens', '#mistakes in words', 'max len of a word', '#chars', '#?', '#!', '#,', '#.', '#caps',
         '#interior caps', '#strange letters', '#interior numbers', 'lev. distance', '#names', '#quest_w', '#who']

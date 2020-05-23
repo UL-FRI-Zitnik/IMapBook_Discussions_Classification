@@ -3,7 +3,6 @@ Base class for the models.
 """
 
 import numpy as np
-from tqdm import tqdm
 
 from utils.data import kfolds
 from utils.metrics import get_mean_se
