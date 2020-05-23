@@ -5,6 +5,7 @@ Base class for the models.
 import numpy as np
 
 from utils.data import kfolds
+from sklearn import metrics
 from utils.metrics import get_mean_se
 
 
@@ -49,23 +50,22 @@ class Model:
 
     def cross_validate(self):
         print(self)
-        acc = []
+        f1 = []
 
         for xtrain, ytrain, xtest, ytest in kfolds(self.imap_columns, self.target, correct_typos=self.correct_typos):
             self.fit(xtrain, ytrain)
             y_predicted = self.predict(xtest)
 
-            no_same = np.sum(ytest == y_predicted)
-            acc += [1] * no_same + [0] * (len(ytest) - no_same)  # todo: ...
+            f1.append(metrics.f1_score(ytest, y_predicted, average='weighted'))
 
-        acc_mean, acc_se = get_mean_se(acc)
+        f1_mean, f1_se = get_mean_se(f1)
 
-        print('accuracy (+- SE): {:.2f} +- {:.3f}'.format(acc_mean, acc_se))
+        print('F1 (+- SE): {:.2f} +- {:.3f}'.format(f1_mean, f1_se))
         print()
 
         return {
-            'acc': float(acc_mean),
-            'acc_se': float(acc_se),
+            'f1': float(f1_mean),
+            'f1_se': float(f1_se),
         }
 
     def feature_importances(self):

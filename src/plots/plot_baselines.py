@@ -16,9 +16,9 @@ def plot():
 
     plt.style.use('ggplot')
 
-    for score in ['acc']:
+    for score in ['f1']:
         score_nice = {
-            'acc': 'Accuracy',
+            'f1': 'F1',
         }[score]
 
         scores = pd.DataFrame([

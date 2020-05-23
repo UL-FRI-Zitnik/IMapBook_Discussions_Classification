@@ -4,7 +4,7 @@ import pickle
 
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import accuracy_score as accuracy
+from sklearn.metrics import f1_score
 from sklearn.preprocessing import LabelEncoder
 
 from classifier_BERT.model import Bert_Model
@@ -46,10 +46,10 @@ for t in targets:
     bert_eng.fit(train_X, train_y)
     pred_bert_eng = bert_eng.predict(test_X)
 
-    results.append([accuracy(test_y, pred_rf),
-                    accuracy(test_y, pred_elmo),
-                    accuracy(test_y, pred_bert_slo),
-                    accuracy(test_y, pred_bert_eng)])
+    results.append([f1_score(test_y, pred_rf, average='weighted'),
+                    f1_score(test_y, pred_elmo, average='weighted'),
+                    f1_score(test_y, pred_bert_slo, average='weighted'),
+                    f1_score(test_y, pred_bert_eng, average='weighted')])
 
 results = pd.DataFrame(results, columns=['RF', 'ELMo'])
 results.index = targets
