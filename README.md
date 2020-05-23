@@ -26,32 +26,88 @@ The data was manually annotated, with three main tags:
 moderating the discussion (M), wondering about users' identities (I), referring to a task, switching 
 it or referring to a particular position in the application (S), or other cases (O).
 
-The _Category_ category can be further on split in sub-categories; _chats_ may be in the form of greetings (G), 
-related to the book (B), they could be encouraging (E), talk about feelings (F), contain cursing (C) or others (O), 
-_Discussion_ messages could be questions (Q), answers (A), answers to users, still related to the discussion topic (AA) 
-or encouraging the discussion (E); _identity_ messages can be answers(A), questions (Q) or their combination (QA).
-The dataset is suitable for both binary and multi-class classification, whether the target variable is the relevance
- or the category of the message respectively.
-
 ### Installation
 
-Run `pip3 install -r requirements.txt`.
+##### Python Dependencies
 
-Download pre-trained BERT models from: `_link_` and store them in the folder `/src/classifier_BERT/pretrained_models`.
+We suggest running everything in virtual environment. If you don't have `virtualenv` installed, run
+
+```
+pip3 install virtualenv
+```
+
+To create and activate virtual environment, run
+
+```
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Then, to install all Python dependencies, run
+
+```pip3 install -r requirements.txt```
+
+If you just want to evaluate models or if you don't have NVIDIA GPU, that's it. If you would like
+ to train BERT models, install CUDA by
+
+```
+pip3 install cudatoolkit~=10.1
+```
+
+##### Downloading ELMo and BERT pre-trained Models
+
+To download ELMo model trained on Slovene corpora, visit [clarin.si](http://hdl.handle.net/11356/1277)
+website and download *Slovenian ELMo model* (file `slovenian-elmo.tar.gz`). Extract its contents and place 
+files `options.json` and `slovenian-elmo-weights.hdf5` into `data/elmo/` folder.
+
+Download our pre-trained BERT models from [here]() and store them in the folder 
+`/src/classifier_BERT/pretrained_models/`.
 
 ### Running
 
-To evaluate the models go to `src` folder and run
+Go to src folder.
 
 ```
-python3 main.py
+cd src
+```
+
+There are two groups of models, baseline models and deep neural models. To run baseline models, run
+
+```
+python3 evaluate_baselines.py
 ``` 
 
-after that to plot the results run scripts in `/src/plots`.
+Script stores numerical results to `./results/results_baselines.yaml` and plot to `./results/plot_baselines.pdf`.
+
+By
+
+```
+python3 evaluate_deep_models.py
+```
+
+ELMo and BERT models are evaluated. Results are stored in file `./results/results_deep_models` and plotted
+in `./results/plot_deep_models.pdf`.
+
+
+To plot features importance, run 
+
+```
+python3 plots/feature_importances.py
+```
+
+Figure is saved to `./results/plot_imp_RF_plot.pdf`.
+
+To train BERT model, run 
+
+```
+python3 train_bert.py
+```
 
 ### Repository Structure
 
-* `data/` contains the dataset and information about it. 
-* `relevant articles/` contains articles relevant to our work.
-* `src/` contains all source code to replicate our work.
-* `report/report.pdf` Report. 
+* `data/`: placeholder for IMapBook data, ELMo embeddings, lexicon, cached data, 
+Slovene stop words, preprocessed data, Slovenian names.
+* `src/`: Source code. Models are stored in folders, prefixed with `classifier_`.
+* `results`: Numerical and graphical results of our research.
+* `report/report.pdf`: Report. 
+* `relevant articles/`: Articles relevant to our work.
