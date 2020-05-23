@@ -70,17 +70,18 @@ TACL-submission anonymization requirements)}
 % Author information does not appear in the pdf unless the "acceptedWithA" option is given
 % See tacl2018v2.sty for other ways to format author information
 \author{ \and }
-\author{Patrik Kojanec \\ pk0404@student.uni-lj.si  
+\author{Patrik Kojanec \\ pk0404@student.uni-lj.si  \\ Univerza v Ljubljani,\\ Ve\v cna pot, 129,\\ 1000 Ljubljana
         \And
-        Marko Rus \\ mr5613@student.uni-lj.si}
+        Marko Rus \\ mr5613@student.uni-lj.si\\ Univerza v Ljubljani,\\ Ve\v cna pot, 129,\\ 1000 Ljubljana}
 
 \date{}
 
 \begin{document}
 \maketitle
 
-% \begin{abstract} 
-% \end{abstract}
+\begin{abstract} 
+The constant advancements in technology introduce new approaches and tools for students' education. Such tool is the ImapBook, an interactive platform that allows students to communicate and discuss about the book they are reading. To give the best support such applications need natural language process features, that understand the content of communications and automatically intervene when the focus on the topic is lost. Thus, we present different text classification models that classify such texts from students' communications into useful categories. The best performing method is a fine-tuned BERT, which seems to outperform simpler classification methods based on handcrafted features.
+\end{abstract}
 
 \section{Introduction}
 Nature Language Processing has seen a huge rise in popularity in recent years. It is now broadly studied topic with many successful applications. In this project we touch subfield Text Classification and apply its methods to the data from IMapbook \cite{imapbook}, a web-based technology that allows reading material to be intermingled with interactive games and discussions. Some portion of discussions from this platform were manually annotated, each reply was given more categories based on the information in the reply. Our goal is to  take this data and try to build a classifier which would predict these categories. Such classifier could then be used to automate analysis of discussions at this platform, recommend the time for the teacher’s intervention and more.
@@ -149,14 +150,19 @@ All features were designed while looking at the data, having some sense in how t
 \label{sssc:class-alg}
 We decided to feed the features to four different classification algorithms to see how they perform. We chose a na\^ive bayesian (NB), random forest (RF), support vector machine (SVM) and a logistic regression (LR) classifiers. We used the implementations from scikit-learn library \cite{scikit-learn}.
 
-When selecting the parameters we observed train and test accuracy and paid closed attention to detecting overfitting. For NB we left the default parameters. For the SVM we used the RBF kernel and set the parameter \textit{gamma} to "auto" and \textit{C} to 5, while for the LR we decided to use "lbfgs" optimizer with maximum 1000 iterations. In the case of LR the input data was standardized to ensure equal class importances. For the RF we set the number of estimators to 150, while \textit{min\_samples\_leaf} to 3 and \textit{min\_samples\_split} to 10. This way we managed to reduce the overfitting to the training data. We kept the same parameters for all the tasks.
+When selecting the parameters we observed train and test accuracy and paid closed attention to detecting overfitting. For NB we left the default parameters. For the SVM we used the RBF kernel and set the parameter \textit{gamma} to "auto" and \textit{C} to 5, while for the LR we decided to use "lbfgs" optimizer with maximum 1000 iterations. In the case of LR the input data was standardized to ensure equal class importance. For the RF we set the number of estimators to 150, while \textit{min\_samples\_leaf} to 3 and \textit{min\_samples\_split} to 10. This way we managed to reduce the overfitting to the training data. We kept the same parameters for all the tasks.
+
+\subsection{BERT fine-tuning}
+An other approach we propose is using a pretrained BERT \cite{devlin2018bert}, by fine-tuning it for our classification tasks. We avoided customizing BERT models, because they require notorious amount of data which was not available. We trained our BERT model for Slovenian, Croatian and English languages for sequence classification for three epochs on training data that consisted of 80\% of our dataset, while the remaining 20\% was left for testing. Out of these 80\%, 15\% were used for validation. We trained one model for each task, for both Slovenian and English-translated messages.
 
 \section{Evaluation}
 We considered more metrics for evaluation of models. Precision, recall, F1, AUC ROC metrics are defined in principle only for binary problems, at multiclass problems they loose some interpretability, so we decided not to use them. By changing the models to return probabilities, we were able to apply log loss as a metric. But the problem was that some probabilities of correct class were equal or near 0, which induced instability to the score.
 
-So we decided to use the classification accuracy as an evaluation metric. We used 5-fold cross validation on the whole dataset, where our performance estimator was the average result of the five test sets. We also measured uncertainty, to have an opinion about variance of the estimator.
+So we decided to use the classification accuracy as an evaluation metric. Because of the complexity of our models we opted for two different evaluation techniques: on models that are not so computationally expensive to fit we used 5-fold cross validation on the whole dataset, where our performance estimator was the average result of the five test sets. This technique also points out the variance of our estimator, hence quantifying to some extend the uncertainty of the performances of our models. The second evaluation is a simple hold-out evaluation, where we split train and test sets at 80\%, thus losing information about the variability of the performance of our predictor.
 
 \section{Results}
+\subsection{5-Fold Cross Validation}
+
 Accuracies for all models and targets are shown in Figure~\ref{fig:acc_res}. We notice that all feature-based classifiers outperform the Majority Classifier. Furthermore, as expecting, the classification accuracy drops with increasing number of target classes. The best performing classification algorithm on this dataset seems to be Random Forest, which outperformed the others in both "CategoryBroad" and "Type" classification tasks. Its performance on the "Book Relevance" task was also on average higher than the rest, however SVM and LR obtained comparable results. Surprisingly, LR with multi-class extension performed quite well also on multi-class classification tasks.
 
 Initially, RF yielded very high performance on the training set, reaching a 95\% accuracy. However, the performance on the test set was lower, showing signs of overfitting. Thus, with a more careful selection of the parameters, we dropped the training accuracy for about 10\% and reached the current test performance.
@@ -178,14 +184,25 @@ RF is often used as a features selection tool, as it ranks the importance of the
     \label{fig:ft_imp_RF}
 \end{figure}
 
-As we notice, each classification task focuses on different features, however there are some common ones that are discriminatory for all three tasks, i.e. last five in the plot. As expected, \textit{Lev. distance} works particularly well on the "Book relevance" problem, since it performs a naive kind of matching of the text messages with the questions. However, it results also as the most discriminatory feature for "Type" classification and third for "CategoryBroad" classification.
+As we notice, each classification task focuses on different features, however there are some common ones that are discriminatory for all three tasks, i.e. last five in the plot. As expected, \textit{Lev. distance} works particularly well on the "Book relevance" problem, since it performs a naïve kind of matching of the text messages with the questions. However, it results also as the most discriminatory feature for "Type" classification and third for "CategoryBroad" classification.
 
 It is not surprising that some features are particularly relevant to some classification tasks, since they were designed for that purpose. It is also known that good features increase performance. Here we showed that some features are particularly suitable for some specific tasks, while others behave well over different classification problems. One future improvement that could be done is trying to define some other features that would boost the performance, removing the irrelevant ones.
 
-\section{Future Perspective}
-Random forest seems to be a very powerful classification algorithm that fits well on the given data. However, features given to it were only simple properties of the messages, extracted by hand. 
+\subsection{Hold-Out Evaluation}
+In Figure \ref{fig:h-o_eval} we see that BERT models seem to perform better than random forest..\\
+Drawbacks: we dont have uncertainty quantification
 
-What we would like to try is to create embeddings not by hand, but with some more sophisticated model, as Neural Networks. Many pretrained Neural Networks exist (BERT \cite{devlin2018bert}), which can be used to extract contextual embeddings. 
+\begin{figure}[tbh]
+    \centering
+    \includegraphics[width = \linewidth]{../results/hold_out_eval.pdf}
+    \caption{\textbf{Hold-out performance evaluation.} Comparing the performance on the test set of BERT, Random Forest and Elmo models.}
+    \label{fig:h-o_eval}
+\end{figure}
+
+\section{Future Perspective}
+% Random forest seems to be a very powerful classification algorithm that fits well on the given data. However, features given to it were only simple properties of the messages, extracted by hand. 
+
+% What we would like to try is to create embeddings not by hand, but with some more sophisticated model, as Neural Networks. Many pretrained Neural Networks exist (BERT \cite{devlin2018bert}), which can be used to extract contextual embeddings. 
 
 
 

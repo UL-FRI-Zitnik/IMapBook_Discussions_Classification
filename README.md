@@ -37,6 +37,8 @@ The dataset is suitable for both binary and multi-class classification, whether 
 
 Run `pip3 install -r requirements.txt`.
 
+Download pre-trained BERT models from: `_link_` and store them in the folder `/src/classifier_BERT/pretrained_models`.
+
 ### Running
 
 To evaluate the models go to `src` folder and run
