@@ -87,7 +87,7 @@ python3 evaluate_deep_models.py
 To plot features importance, run next command. Figure is saved to `./results/plot_imp_RF_plot.pdf`. 
 
 ```
-python3 plots/feature_importances.py
+python3 plots/features_importance.py
 ```
 
 To train BERT model, run 
