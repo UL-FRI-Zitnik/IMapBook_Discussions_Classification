@@ -22,4 +22,4 @@ importance.plot.barh(title='Features Importance for RF Model', fontsize=14)
 
 plt.style.use('ggplot')
 plt.tight_layout()
-plt.savefig(os.path.join('../../results', 'features_imp_RF_plot.pdf'), format='pdf')
+plt.savefig(os.path.join('../results', 'features_imp_RF_plot.pdf'), format='pdf')
