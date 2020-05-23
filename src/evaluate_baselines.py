@@ -2,7 +2,6 @@ import os
 
 import yaml
 
-from classifier_elmo.model import ElmoClassifier
 from classifier_handcrafted_features.model import HandcraftedFeatures
 from classifier_majority.model import Majority
 from plots.plot_baselines import plot
