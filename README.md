@@ -89,7 +89,7 @@ To plot features importance, run next command. Figure is saved to `./results/plo
 ```
 cd plots
 export PYTHONPATH="${PYTHONPATH}:.."
-python3 plots/features_importance.py
+python3 features_importance.py
 ```
 
 To train BERT model, run 
