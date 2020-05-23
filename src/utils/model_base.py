@@ -3,9 +3,9 @@ Base class for the models.
 """
 
 import numpy as np
+from sklearn import metrics
 
 from utils.data import kfolds
-from sklearn import metrics
 from utils.metrics import get_mean_se
 
 

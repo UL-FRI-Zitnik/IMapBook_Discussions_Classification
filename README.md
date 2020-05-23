@@ -60,7 +60,8 @@ To download ELMo model trained on Slovene corpus, visit [clarin.si](http://hdl.h
 website and download *Slovenian ELMo model* (file `slovenian-elmo.tar.gz`). Extract its contents and place 
 files `options.json` and `slovenian-elmo-weights.hdf5` into `data/elmo/` folder.
 
-Download our pre-trained BERT models from [here]() and store them in the folder 
+Download our pre-trained BERT models from [here](https://unilj-my.sharepoint.com/:u:/g/personal/pk0404_student_uni-lj_si/EeuW9GdbAxRAt0PuM80eAnwByKcI-ccNHpBAO_W5H2jW9w?e=oBbwTD)
+ and store them in the folder 
 `/src/classifier_BERT/pretrained_models/`.
 
 ### Running

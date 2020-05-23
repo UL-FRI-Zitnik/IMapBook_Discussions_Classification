@@ -26,32 +26,40 @@ for t in targets:
     enc.fit(train_y.values)
     test_y = enc.transform(test_y.values)
 
-    print('Baseline')
+    print('Handcrafted Features')
     rf = HandcraftedFeatures('RF', target=t)
     rf.fit(train_X[['Message', 'Topic']], train_y)
     pred_rf = enc.transform(rf.predict(test_X[['Message', 'Topic']]))
+    f1_rf = f1_score(test_y, pred_rf, average='weighted')
+    print('F1:', f1_rf)
 
     print('ELMo')
     elmo = ElmoClassifier('RF', target=t)
     elmo.fit(train_X[['Message', 'Topic']], train_y)
     pred_elmo = enc.transform(elmo.predict(test_X[['Message', 'Topic']]))
+    f1_elmo = f1_score(test_y, pred_elmo, average='weighted')
+    print('F1:', f1_elmo)
 
     print('BERT on Slovene messages')
     bert_slo = Bert_Model(t)
     bert_slo.fit(train_X, train_y)
     pred_bert_slo = bert_slo.predict(test_X)
+    f1_bert_slo = f1_score(test_y, pred_bert_slo, average='weighted')
+    print('F1:', f1_bert_slo)
 
     print('BERT on English messages')
     bert_eng = Bert_Model(t, True)
     bert_eng.fit(train_X, train_y)
     pred_bert_eng = bert_eng.predict(test_X)
+    f1_bert_eng = f1_score(test_y, pred_bert_eng, average='weighted')
+    print('F1:', f1_bert_eng)
 
-    results.append([f1_score(test_y, pred_rf, average='weighted'),
-                    f1_score(test_y, pred_elmo, average='weighted'),
-                    f1_score(test_y, pred_bert_slo, average='weighted'),
-                    f1_score(test_y, pred_bert_eng, average='weighted')])
+    results.append([f1_rf,
+                    f1_elmo,
+                    f1_bert_slo,
+                    f1_bert_eng])
 
-results = pd.DataFrame(results, columns=['RF', 'ELMo'])
+results = pd.DataFrame(results, columns=['RF', 'ELMo', 'BERT_slo', 'BERT_eng'])
 results.index = targets
 
 pickle.dump(results, open('../results/results_deep_models', 'wb+'))
