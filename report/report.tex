@@ -186,7 +186,7 @@ Initially, RF yielded very high performance on the training set, reaching a 95\%
 \end{figure}
 
 \subsubsection{Features Importance}
-RF is often used as a features selection tool, as it ranks the importance of the features. In Figure \ref{fig:ft_imp_RF} we show the importance of each feature in the decision process of the RF model.
+RF is often used as a features selection tool, as it ranks the importance of the features. Features used at the top of the tree contribute to the final prediction decision of a larger fraction of the input samples. The expected fraction of the samples they contribute to can thus be used as an estimate of the relative importance of the features. I In Figure \ref{fig:ft_imp_RF} we show the importance of each feature in the decision process of the RF model.
 
 \begin{figure}[tbh]
     \centering
@@ -232,10 +232,10 @@ When analyzing performance of the BERT models, we can clearly see 15 - 20\% incr
 We would like to mention, that here we did not measure uncertainty of the scores. But scores are still comparable, as we evaluated models on the same test set.
  
 \subsection{Analyzing Predictions}
-A lot of messages are asking for identity of somebody, and such messages were mostly successfully classified by all models. Lots of messages contain a lot of gibberish and are as such distinguishable from other messages. Harder to predict are messages that are short and contain only few words. Models performed worse also on messages with a lot of unindentified mistakes in words. 
+A lot of messages are asking for identity of somebody, and such messages were mostly successfully classified by all models. Lots of messages contain a lot of gibberish and are as such distinguishable from other messages. Harder to predict are messages that are short and contain only few words. Models performed worse also on messages with a lot of unidentified mistakes in words. 
 
 \section{Conclusion}
-The main question that we were answering was to what extent can messages be automatically recognized as of certain type. We showed that you can achieve decent performance with handcrafted features and simple models, as also with fully automatic generation of features. Furthermore, we fine-tuned end-to-end BERT neural network, yielding in significant increase in performance.
+The main question that we were answering was to what extent can messages be automatically recognized as of certain type. We showed that you can achieve decent performance with handcrafted features and simple models, as also with fully automatic generation of features. Furthermore, we fine-tuned end-to-end BERT neural network, yielding a significant increase in performance.
 
 \subsection{Further Work}
 Messages typically have a flow, messages closer together are more probable to have the same type. In our approach we discarded this information about the time the message was sent, which resulted in the loss of information. One possible improvement to our models would be to somehow incorporate this information to the models, to identify messages that are a direct reply to some other message. This would improve performance at short messages, which are without such context rarely meaningful.

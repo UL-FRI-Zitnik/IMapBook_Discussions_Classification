@@ -3,6 +3,8 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 
+plt.style.use('ggplot')
+
 if os.getcwd().split('/')[-1] == 'plots':
     os.chdir('..')
 
