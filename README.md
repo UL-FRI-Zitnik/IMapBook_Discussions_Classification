@@ -24,7 +24,7 @@ it or referring to a particular position in the application (S), or other cases 
 
 ### Installation
 
-##### Python Dependencies
+#### Python Dependencies Using Virtual Enviorment
 
 We suggest running everything in virtual environment. If you don't have `virtualenv` installed, run
 
@@ -49,6 +49,23 @@ If you just want to evaluate models or if you don't have NVIDIA GPU, that's it. 
 ```
 pip3 install cudatoolkit~=10.1
 ```
+
+#### Python Dependencies Using Conda
+
+If you prefer using conda, first create a conda enviorment,
+
+```conda create -n ImapBook_env python=3.7```
+
+```conda activate ImapBook_env```
+
+To install conda Python dependencies, run
+
+```conda install --file requirements_conda.txt```
+
+Next install the missing dependencies with pip:
+
+```pip install transformers allennlp```
+
 
 ##### Downloading ELMo and BERT pre-trained Models
 
