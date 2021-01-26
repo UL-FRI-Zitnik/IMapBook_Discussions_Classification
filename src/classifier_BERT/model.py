@@ -33,6 +33,8 @@ class Bert_Model(Model):
             self.n_class = 3
         elif self.target == 'CategoryBroad':
             self.n_class = 6
+        elif self.target == 'Category':
+            self.n_class = 18
         else:
             self.n_class = 2
 

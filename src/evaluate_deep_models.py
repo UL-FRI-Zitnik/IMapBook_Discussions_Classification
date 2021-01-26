@@ -15,7 +15,7 @@ from utils.data import select_columns
 
 plt.style.use('ggplot')
 
-targets = ['Book relevance', 'Type', 'CategoryBroad']
+targets = ['Category', 'Book relevance', 'Type', 'CategoryBroad']
 
 results = []
 for t in targets:

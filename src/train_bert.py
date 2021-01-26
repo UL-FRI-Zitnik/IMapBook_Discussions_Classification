@@ -26,6 +26,11 @@ from classifier_BERT.model import Bert_Model
 # acc4 = model4.evaluate(epochs = 3)
 # print('Accuracy on test set: ',acc4)
 
-model5 = Bert_Model(target='CategoryBroad', english=True)
-acc5 = model5.evaluate(epochs=3)
-print('Accuracy on test set: ', acc5)
+#model5 = Bert_Model(target='CategoryBroad', english=True)
+#acc5 = model5.evaluate(epochs=3)
+#print('Accuracy on test set: ', acc5)
+
+
+model6 = Bert_Model(target='Category', english=True)
+acc6 = model6.evaluate(epochs=3)
+print('Accuracy on test set: ', acc6)

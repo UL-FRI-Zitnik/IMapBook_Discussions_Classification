@@ -72,3 +72,4 @@ def replace_with_corrected_typos(data):
 if __name__ == '__main__':
     # example:
     xtrain, ytrain, xtest, ytest = select_columns()
+    print("Data imported")

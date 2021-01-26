@@ -1,9 +1,0 @@
-pandas
-xlrd
-numpy
-scikit-learn
-matplotlib
-nltk
-pyyaml
-tensorflow
-pytorch

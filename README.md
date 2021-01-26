@@ -24,48 +24,19 @@ it or referring to a particular position in the application (S), or other cases 
 
 ### Installation
 
-#### Python Dependencies Using Virtual Enviorment
-
-We suggest running everything in virtual environment. If you don't have `virtualenv` installed, run
-
-```
-pip3 install virtualenv
-```
-
-To create and activate virtual environment, run
-
-```
-virtualenv venv
-source venv/bin/activate
-```
-
-Then, to install all Python dependencies, run
-
-```pip3 install -r requirements.txt```
-
-If you just want to evaluate models or if you don't have NVIDIA GPU, that's it. If you would like
- to train BERT models, install CUDA by
-
-```
-pip3 install cudatoolkit~=10.1
-```
-
 #### Python Dependencies Using Conda
 
 If you prefer using conda, first create a conda enviorment,
 
-```conda create -n ImapBook_env python=3.7```
+```conda create -n IMapBookClassification python=3.7```
 
-```conda activate ImapBook_env```
+```conda activate IMapBookClassification```
 
 To install conda Python dependencies, run
 
-```conda install --file requirements_conda.txt```
+```pip install -r requirements.txt```
 
-Next install the missing dependencies with pip:
-
-```pip install transformers allennlp```
-
+If you just want to evaluate models or if you don't have NVIDIA GPU, that's it. If you would like to train BERT models, install CUDA by ```pip3 install cudatoolkit~=10.1```
 
 ##### Downloading ELMo and BERT pre-trained Models
 

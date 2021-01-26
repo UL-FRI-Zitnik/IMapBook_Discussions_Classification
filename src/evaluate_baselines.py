@@ -11,7 +11,7 @@ if os.path.exists('../results/results_baselines.yaml'):
 else:
     results = {}
 
-for i, target in enumerate(['Book relevance', 'Type', 'CategoryBroad']):
+for i, target in enumerate(['Category', 'Book relevance', 'Type', 'CategoryBroad']):
     print('TARGET:', target, '\n')
 
     if target not in results:
